@@ -1,10 +1,7 @@
-package sorts;
-
-
 public class Main {
 
 	public static void main(String[] args) {
-		double[] array = randArray(10000000,0,1000000000);
+		double[] array = randArray(200000000,0,1000000);
 		//printArray(array);
 		//System.out.println("\n\n\n");
 		
@@ -127,12 +124,30 @@ public class Main {
 
 	public static void quickSort(double[] array, int left, int right) {
 		if (left < right) {
-			pivot = partition(array, left, right);
-			
+			int pivot = partition(array, left, right);
+			quickSort(array, left, pivot - 1);
+			quickSort(array, pivot + 1, right);
 		}
 			
 	}
-	public static void partition(double[] array, int left, int right) {
+	public static int partition(double[] array, int left, int right) {
+		double pivot_value = array[right];
+		int i = left - 1; // index of last item in 1st subarray where items < pivot_value
+		for (int j = left; j < right; j++) {
+			if (array[j] <= pivot_value) {
+				i++;
+				// swap array[j] and array[i]
+				double tmp = array[j];
+				array[j] = array[i];
+				array[i] = tmp;
+			}
+		}
+		// swap array[i+1] with array[right]
+		double tmp = array[i+1];
+		array[i+1] = array[right];
+		array[right] = tmp;
 		
+		return i+1;
+				
 	}
 }
